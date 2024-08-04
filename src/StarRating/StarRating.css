@@ -1,0 +1,14 @@
+  .rating-container {
+    font-size: 24px;
+    color: #FFD700;
+  }
+
+  .star {
+    cursor: pointer;
+    transition: color 0.2s;
+    color: #c0c0bc;
+  }
+
+  .filled {
+    color: #FFD700;
+  }

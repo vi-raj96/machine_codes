@@ -1,0 +1,46 @@
+.progress-bar {
+    width: 90%;
+    margin: 1px auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+  }
+  
+  .progress {
+    height: 20px;
+    background-color: #007bff;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  
+  .progress-text {
+    text-align: center;
+    margin-top: 4px;
+    font-weight: bold;
+  }
+  
+  .button-group {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .button-group button {
+    padding: 4px 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .button-group button:hover {
+    background-color: #0056b3;
+  }
+  
+  .button-group button:active {
+    background-color: #003080;
+  }
+  
