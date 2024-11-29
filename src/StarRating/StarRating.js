@@ -1,4 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState } from "react"; //Without CSS
+
+const starRating = () => {
+  const [star, setStar] = useState(0);
+
+  const handleStar = (index) => {
+    setStar(index);
+  };
+
+  return (
+    <>
+      <h1>start rating</h1>
+      <div>
+        {[1, 2, 3, 4, 5].map((index) => (
+          <span key={index} onClick={() => handleStar(index)}>
+            *
+          </span>
+        ))}
+      </div>
+      <p>{star} out of 5 stars</p>
+    </>
+  );
+};
+
+export default starRating;
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from "react";  // Using extrenal css
+
+const starRating = () => {
+  const [star, setStar] = useState(0);
+
+  const handleStar = (index) => {
+    setStar(index);
+  };
+
+  return (
+    <>
+      <h1>start rating</h1>
+      <div>
+        {[1, 2, 3, 4, 5].map((index) => (
+          <span key={index} onClick={() => handleStar(index)}>
+            {" "}
+            *
+          </span>
+        ))}
+      </div>
+      <p>{star} out of 5 stars</p>
+    </>
+  );
+};
+
+export default starRating;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';  // Using external css
 import './StarRating.css'
 
 function StarRating() {
