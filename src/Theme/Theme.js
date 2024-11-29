@@ -9,7 +9,6 @@ const Theme = () => {
 
   return (
     <div
-      className={isDarkMode ? 'dark' : 'light'}
       style={{
         backgroundColor: isDarkMode ? '#333' : '#f5f5f5',
         color: isDarkMode ? '#f5f5f5' : '#333',
