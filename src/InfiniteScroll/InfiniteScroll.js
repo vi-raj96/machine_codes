@@ -1,52 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
 
 const InfiniteScroll = () => {
   const [data, setData] = useState([]);
-  const [offset,setOffset] = useState(0);
-  
+  const [startIndex, setStartIndex] = useState(0); // Renamed from `offset`
+
+  // Mock data generation function
+  const generateMockData = (start, limit) => {
+    const mockData = [];
+    for (let i = start; i < start + limit; i++) {
+      mockData.push({ id: i, title: `Product ${i}`, price: (i + 1) * 10 });
+    }
+    return mockData;
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=5`);
-       const data = res.data
-        console.log(data);
-       // setData(data);
-         setData(prev => [...prev , ...data]);
-      } catch (error){
-        console.log(error);
-      }
-    }
+    // Simulate data fetching by generating mock data
+    const fetchData = () => {
+      const newData = generateMockData(startIndex, 5); // Generate 5 items at a time
+      setData((prev) => [...prev, ...newData]); // Append new data to the existing data
+    };
     fetchData();
-  },[offset]);
+  }, [startIndex]);
 
   useEffect(() => {
     const handleScroll = (e) => {
       const scrollHeight = e.target.documentElement.scrollHeight;
-      const currentHeight = e.target.documentElement.scrollTop + window.innerHeight;
+      const currentHeight =
+        e.target.documentElement.scrollTop + window.innerHeight;
 
-      if(currentHeight+1 >=scrollHeight) {
-       setOffset(offset+5);
-       console.log(scrollHeight);
-       console.log(currentHeight);
-       console.log(offset);
+      if (currentHeight + 1 >= scrollHeight) {
+        setStartIndex((prevStartIndex) => prevStartIndex + 5); // Increase the starting index for the next batch
       }
-    }
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
     };
-  },[offset]);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <div>  
-      {data && data.map(product => (
-        <>
-        <h1> {product.title}   {product.price}$</h1>
-        </>
-      ))}
-       <p>Loading.....</p> 
+    <div>
+      {data &&
+        data.map((product) => (
+          <div key={product.id} style={{ margin: "10px 0" }}>
+            <h2>
+              {product.title} - ${product.price}
+            </h2>
+          </div>
+        ))}
+      <p>Loading...</p>
     </div>
   );
 };
