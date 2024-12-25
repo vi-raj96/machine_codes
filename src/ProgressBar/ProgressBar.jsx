@@ -1,49 +1,77 @@
-import React, { useState, useRef } from 'react';
-import './ProgressBar.css'
+import React, { useState, useEffect } from "react";
 
 const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
-  const [timerId, setTimerId] = useState(null);
+  const [intervalId, setIntervalId] = useState(null);
 
-  // Function to start the progress bar
+  // Function to start or resume the progress bar
   const startProgress = () => {
-    if (timerId) return; // Return if already running
-
-    const intervalId = setInterval(() => {
+    if (intervalId) return; // Don't start a new interval if one already exists
+    const id = setInterval(() => {
       setProgress((prevProgress) => {
-        const newProgress = prevProgress + 1;
-        if (newProgress >= 100) {
-          clearInterval(intervalId);
-          setTimerId(null);
+        if (prevProgress >= 100) {
+          clearInterval(id);
+          return 100;
         }
-        return newProgress;
+        return prevProgress + 1;
       });
-    }, 100);
-
-    setTimerId(intervalId);
-  };
-
-  // Function to reset the progress bar
-  const resetProgress = () => {
-    clearInterval(timerId);
-    setProgress(0);
-    setTimerId(null);
+    }, 100); // Update every 100ms
+    setIntervalId(id);
   };
 
   // Function to stop the progress bar
   const stopProgress = () => {
-    clearInterval(timerId);
-    setTimerId(null);
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
   };
 
+  // Function to restart the progress bar
+  const restartProgress = () => {
+    setProgress(0);
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [intervalId]);
+
   return (
-    <div className="progress-bar">
-      <div className="progress" style={{ width: `${progress}%` }} />
-      <div className="progress-text">{progress}%</div>
-      <div className="button-group">
+    <div>
+      <div
+        style={{
+          width: "100%",
+          backgroundColor: "#f3f3f3",
+          borderRadius: "5px",
+          height: "30px",
+        }}
+      >
+        <div
+          style={{
+            width: `${progress}%`,
+            height: "100%",
+            backgroundColor: "#4caf50",
+            borderRadius: "5px",
+            textAlign: "center",
+            lineHeight: "30px",
+            color: "white",
+          }}
+        >
+          {progress}%
+        </div>
+      </div>
+      <div>
         <button onClick={startProgress}>Start</button>
-        <button onClick={resetProgress}>Reset</button>
         <button onClick={stopProgress}>Stop</button>
+        <button onClick={restartProgress}>Restart</button>
       </div>
     </div>
   );
