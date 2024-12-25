@@ -22,6 +22,16 @@ const InfiniteScroll = () => {
     fetchData();
   }, [startIndex]);
 
+  //documentElement.scrollHeight 
+  // - The entire height of the content, including the visible and hidden parts.
+  // - This value remains constant regardless of how much you scroll.
+
+  // documentElement.scrollTop
+  // - A vertical measurement starting from the top of the content to the top of the visible viewport.
+  // - As you scroll down, this value increases.
+
+  // window.innerHeight
+  // - A box or rectangle showing the part of the webpage that is currently visible to the user.
   useEffect(() => {
     const handleScroll = (e) => {
       const scrollHeight = e.target.documentElement.scrollHeight;
